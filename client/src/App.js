@@ -1,25 +1,40 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import Header from "./component/Header";
+import Landing from "./component/Landing";
+import Login from "./component/Login";
+import Profile from "./component/Profile";
+import NotFound from "./component/NotFound";
+
+import styled from "styled-components";
+
+const Wrapper = styled.section`
+  width: 100%;
+  margin: 0 auto;
+
+  @media (min-width: 961px) {
+    width: 75%;
+  }
+`;
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Wrapper>
+          <BrowserRouter>
+            <div>
+              <Header />
+              <Switch>
+                <Route exact path="/" component={Landing} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/profile" component={Profile} />
+                <Route component={NotFound} />
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </Wrapper>
       </div>
     );
   }
