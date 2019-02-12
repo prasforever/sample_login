@@ -3,7 +3,7 @@ var User = require("../models/User");
 
 module.exports = app => {
   // Register User
-  app.post("/register", function(req, res) {
+  app.post("/api/register", function(req, res) {
     var password = req.body.password;
     var password2 = req.body.password2;
 
@@ -32,17 +32,17 @@ module.exports = app => {
   });
 
   // Login User
-  app.post("/login", passport.authenticate("local"), function(req, res) {
+  app.post("/api/login", passport.authenticate("local"), function(req, res) {
     res.send(req.user);
   });
 
   // Get current user
-  app.get("/user", function(req, res) {
+  app.get("/api/user", function(req, res) {
     res.send(req.user);
   });
 
   // Logout
-  app.get("/logout", function(req, res) {
+  app.get("/api/logout", function(req, res) {
     req.logout();
     res.send(null);
   });
