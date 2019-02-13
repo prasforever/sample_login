@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as style from "./styles";
 
 const customStyles = {
@@ -51,7 +52,10 @@ class Register extends Component {
       redirectTo: null,
       countriesDropdown: [],
       skillsDropdown: [],
-      skillsInput: ""
+      skillsInput: "",
+      showPasswordMismatchIcon: false,
+      showUsernameUnvailableIcon: false,
+      showEmailUnvailableIcon: false
     };
   }
 
@@ -130,6 +134,12 @@ class Register extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
+    this.setState({
+      showPasswordMismatchIcon: false,
+      showUsernameUnvailableIcon: false,
+      showEmailUnvailableIcon: false
+    });
+
     axios
       .post("/api/register", {
         username: this.state.username,
@@ -143,6 +153,22 @@ class Register extends Component {
         Skills: this.state.Skills
       })
       .then(res => {
+        if (res.status === 204) {
+          this.setState({
+            showPasswordMismatchIcon: true
+          });
+        }
+        if (res.status === 205) {
+          this.setState({
+            showUsernameUnvailableIcon: true
+          });
+        }
+        if (res.status === 206) {
+          this.setState({
+            showEmailUnvailableIcon: true
+          });
+        }
+
         if (res.status === 200) {
           // update App.js state
           this.props.updateUser({
@@ -187,15 +213,29 @@ class Register extends Component {
                   onChange={this.handleChange.bind(this)}
                   required
                 />
+                {this.state.showUsernameUnvailableIcon ? (
+                  <style.CardInputIcon>
+                    <FontAwesomeIcon icon="exclamation-circle" size="lg" />
+                  </style.CardInputIcon>
+                ) : (
+                  ""
+                )}
               </style.CardFieldset>
               <style.CardFieldset>
                 <style.CardInput
                   name="email"
                   placeholder="Email"
-                  type="text"
+                  type="email"
                   onChange={this.handleChange.bind(this)}
                   required
                 />
+                {this.state.showEmailUnvailableIcon ? (
+                  <style.CardInputIcon>
+                    <FontAwesomeIcon icon="exclamation-circle" size="lg" />
+                  </style.CardInputIcon>
+                ) : (
+                  ""
+                )}
               </style.CardFieldset>
               <style.CardFieldset>
                 <style.CardInput
@@ -233,7 +273,6 @@ class Register extends Component {
                   required
                 />
               </style.CardFieldset>
-
               <style.CardFieldset>
                 <style.CardInput
                   name="password2"
@@ -242,6 +281,13 @@ class Register extends Component {
                   onChange={this.handleChange.bind(this)}
                   required
                 />
+                {this.state.showPasswordMismatchIcon ? (
+                  <style.CardInputIcon>
+                    <FontAwesomeIcon icon="exclamation-circle" size="lg" />
+                  </style.CardInputIcon>
+                ) : (
+                  ""
+                )}
               </style.CardFieldset>
               <style.CardFieldset>
                 <style.CardSelectInput

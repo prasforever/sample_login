@@ -59,9 +59,20 @@ export const CardInput = styled.input`
   transition: border-bottom-color 0.25s ease-in;
 
   &:focus {
-    border-bottom-color: #e5195f;
+    border-bottom-color: #2b6dad;
     outline: 0;
   }
+`;
+
+export const CardInputIcon = styled.div`
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  color:  #cc0000
+  width: 24px;
+  height: 24px;
+  font-family: inherit;
+  font-size: 14px;
 `;
 
 export const CardSelectInput = styled(Select)`
@@ -95,7 +106,7 @@ export const CardButton = styled.button`
   font-size: 14px;
   font-weight: 700;
   color: #fff;
-  background-color: #e5195f;
+  background-color: #2b6dad;
   border: 0;
   border-radius: 35px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
