@@ -3,6 +3,38 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 import * as style from "./styles";
 
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    borderBottom: "#e5195f"
+  }),
+  valueContainer: base => ({
+    ...base,
+    padding: "0 !important"
+  }),
+
+  container: base => ({
+    ...base,
+    margin: "0 !important",
+    padding: "0 !important"
+  }),
+  control: (provided, state) => ({
+    ...provided,
+    border: "0 !important",
+    // This line disable the blue border
+    boxShadow: "0 !important",
+    "&:hover": {
+      border: "0 !important"
+    }
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+
+    return { ...provided, opacity, transition };
+  }
+};
+
 class Register extends Component {
   constructor() {
     super();
@@ -170,6 +202,7 @@ class Register extends Component {
                   options={this.state.countries}
                   placeholder="Country"
                   type="text"
+                  styles={customStyles}
                   onChange={this.handleDDChange.bind(this)}
                   required
                 />
