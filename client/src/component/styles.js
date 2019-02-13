@@ -112,19 +112,23 @@ export const CardTable = styled.table`
   margin: 0 auto;
   width: 90%;
 `;
+export const CardTableBody = styled.tbody`
+  margin: 0 auto;
+  width: 90%;
+`;
 
-export const CardRow = styled.table`
+export const CardRow = styled.tr`
   text-align: center;
   width: 100%;
 `;
 
-export const CardFieldLeft = styled.table`
+export const CardFieldLeft = styled.td`
   width: 49%;
   text-align: right;
   float: left;
 `;
 
-export const CardFieldRight = styled.table`
+export const CardFieldRight = styled.td`
   text-align: left;
   width: 49%;
   float: right;
