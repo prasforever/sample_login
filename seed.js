@@ -6,7 +6,7 @@ const keys = require("./config/keys.js");
 const config = {
   database: keys.mongoURI,
   inputPath: path.resolve(__dirname, "./data"),
-  dropDatabase: true
+  dropDatabase: false
 };
 
 const seeder = new Seeder(config);

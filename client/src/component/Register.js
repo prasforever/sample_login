@@ -49,7 +49,9 @@ class Register extends Component {
       Country: "",
       Skills: "",
       redirectTo: null,
-      countries: []
+      countriesDropdown: [],
+      skillsDropdown: [],
+      skillsInput: ""
     };
   }
 
@@ -59,12 +61,28 @@ class Register extends Component {
       .then(res => {
         if (res.status === 200) {
           this.setState({
-            countries: res.data
+            countriesDropdown: res.data
           });
         }
       })
       .catch(error => {
         console.log("login error: ");
+        console.log(error);
+      });
+
+    axios
+      .post("/api/getSkills", {
+        value: this.state.skillsInput
+      })
+      .then(res => {
+        if (res.status === 200) {
+          this.setState({
+            skillsDropdown: res.data
+          });
+        }
+      })
+      .catch(error => {
+        console.log("Fetching skills Errored out: ");
         console.log(error);
       });
   }
@@ -75,10 +93,38 @@ class Register extends Component {
     });
   }
 
-  handleDDChange = selected => {
+  handleSkillsChange = selected => {
+    var selectedSkills = [];
+    selected.forEach(element => {
+      selectedSkills.push(element.label);
+    });
+    this.setState({
+      Skills: selectedSkills.toString()
+    });
+  };
+
+  handleCountryChange = selected => {
     this.setState({
       Country: selected.label
     });
+  };
+
+  handleDDInputChange = input => {
+    axios
+      .post("/api/getSkills", {
+        value: input
+      })
+      .then(res => {
+        if (res.status === 200) {
+          this.setState({
+            skillsDropdown: res.data
+          });
+        }
+      })
+      .catch(error => {
+        console.log("Fetching skills Errored out: ");
+        console.log(error);
+      });
   };
 
   handleSubmit(event) {
@@ -94,7 +140,7 @@ class Register extends Component {
         password: this.state.password,
         password2: this.state.password2,
         Country: this.state.Country,
-        Skills: this.state.skills
+        Skills: this.state.Skills
       })
       .then(res => {
         if (res.status === 200) {
@@ -199,21 +245,22 @@ class Register extends Component {
               </style.CardFieldset>
               <style.CardFieldset>
                 <style.CardSelectInput
-                  options={this.state.countries}
+                  options={this.state.countriesDropdown}
                   placeholder="Country"
-                  type="text"
                   styles={customStyles}
-                  onChange={this.handleDDChange.bind(this)}
+                  onChange={this.handleCountryChange.bind(this)}
                   required
                 />
               </style.CardFieldset>
               <style.CardFieldset>
-                <style.CardInput
-                  name="skills"
+                <style.CardSelectInput
+                  options={this.state.skillsDropdown}
                   placeholder="Skills"
-                  type="text"
-                  onChange={this.handleChange.bind(this)}
+                  styles={customStyles}
+                  onChange={this.handleSkillsChange.bind(this)}
+                  onInputChange={this.handleDDInputChange.bind(this)}
                   required
+                  isMulti
                 />
               </style.CardFieldset>
               <style.CardFieldset />
