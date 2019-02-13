@@ -16,8 +16,25 @@ class Register extends Component {
       password2: "",
       Country: "",
       Skills: "",
-      redirectTo: null
+      redirectTo: null,
+      countries: []
     };
+  }
+
+  componentDidMount() {
+    axios
+      .get("/api/getCountries", {})
+      .then(res => {
+        if (res.status === 200) {
+          this.setState({
+            countries: res.data
+          });
+        }
+      })
+      .catch(error => {
+        console.log("login error: ");
+        console.log(error);
+      });
   }
 
   handleChange(event) {
@@ -25,6 +42,12 @@ class Register extends Component {
       [event.target.name]: event.target.value
     });
   }
+
+  handleDDChange = selected => {
+    this.setState({
+      Country: selected.label
+    });
+  };
 
   handleSubmit(event) {
     event.preventDefault();
@@ -38,7 +61,7 @@ class Register extends Component {
         dateOfBirth: this.state.dateOfBirth,
         password: this.state.password,
         password2: this.state.password2,
-        Country: this.state.country,
+        Country: this.state.Country,
         Skills: this.state.skills
       })
       .then(res => {
@@ -143,11 +166,11 @@ class Register extends Component {
                 />
               </style.CardFieldset>
               <style.CardFieldset>
-                <style.CardInput
-                  name="country"
+                <style.CardSelectInput
+                  options={this.state.countries}
                   placeholder="Country"
                   type="text"
-                  onChange={this.handleChange.bind(this)}
+                  onChange={this.handleDDChange.bind(this)}
                   required
                 />
               </style.CardFieldset>
