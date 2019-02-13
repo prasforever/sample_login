@@ -51,8 +51,8 @@ class Register extends Component {
             firstName: res.data.firstName,
             lastName: res.data.lastName,
             dateOfBirth: res.data.dateOfBirth,
-            Country: res.data.country,
-            Skills: res.data.skills
+            Country: res.data.Country,
+            Skills: res.data.Skills
           });
           // update the state to redirect to home
           this.setState({
