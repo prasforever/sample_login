@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
-import styled from "styled-components";
-
-const RegisterContent = styled.section`
-  padding: 20px;
-
-  @media (min-width: 961px) {
-    padding: 80px 40px;
-  }
-`;
+import * as style from "./styles";
 
 class Register extends Component {
   constructor() {
@@ -36,9 +28,6 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log("handleSubmit");
-    console.log(this.state.username);
-    console.log(this.state.password);
 
     axios
       .post("/api/register", {
@@ -72,7 +61,7 @@ class Register extends Component {
         }
       })
       .catch(error => {
-        console.log("Reghister error: ");
+        console.log("Register error: ");
         console.log(error);
       });
   }
@@ -82,101 +71,102 @@ class Register extends Component {
       return <Redirect to={{ pathname: this.state.redirectTo }} />;
     } else {
       return (
-        <RegisterContent>
-          <form onSubmit={this.handleSubmit.bind(this)}>
-            <label>
-              Username:
-              <input
-                name="username"
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-              />
-            </label>
-            <br />
-            <label>
-              Email:
-              <input
-                name="email"
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-              />
-            </label>
-            <br />
-            <label>
-              First Name:
-              <input
-                name="firstName"
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-              />
-            </label>
-            <br />
-            <label>
-              Last Name:
-              <input
-                name="lastName"
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-              />
-            </label>
-            <br />
-            <label>
-              Date of Birth:
-              <input
-                name="dateOfBirth"
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-              />
-            </label>
-            <br />
-            <label>
-              Password:
-              <input
-                name="password"
-                type="password"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-              />
-            </label>
-            <br />
-            <label>
-              Password once again:
-              <input
-                name="password2"
-                type="password"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-              />
-            </label>
-            <br />
-            <label>
-              Country:
-              <input
-                name="country"
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-              />
-            </label>
-            <br />
-            <label>
-              Skills:
-              <input
-                name="skills"
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-              />
-            </label>
-            <br />
-            <input type="submit" value="Submit" />
-          </form>
-        </RegisterContent>
+        <style.CardWrapper>
+          <style.CardHeader>
+            <style.CardHeading>Login</style.CardHeading>
+          </style.CardHeader>
+
+          <style.CardBody>
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              <style.CardFieldset>
+                <style.CardInput
+                  name="username"
+                  placeholder="Username"
+                  type="text"
+                  onChange={this.handleChange.bind(this)}
+                  required
+                />
+              </style.CardFieldset>
+              <style.CardFieldset>
+                <style.CardInput
+                  name="email"
+                  placeholder="Email"
+                  type="text"
+                  onChange={this.handleChange.bind(this)}
+                  required
+                />
+              </style.CardFieldset>
+              <style.CardFieldset>
+                <style.CardInput
+                  name="firstName"
+                  placeholder="First name"
+                  type="text"
+                  onChange={this.handleChange.bind(this)}
+                  required
+                />
+              </style.CardFieldset>
+              <style.CardFieldset>
+                <style.CardInput
+                  name="lastName"
+                  placeholder="Last name"
+                  type="text"
+                  onChange={this.handleChange.bind(this)}
+                  required
+                />
+              </style.CardFieldset>
+              <style.CardFieldset>
+                <style.CardInput
+                  name="dateOfBirth"
+                  placeholder="Date of Birth"
+                  type="text"
+                  onChange={this.handleChange.bind(this)}
+                  required
+                />
+              </style.CardFieldset>
+              <style.CardFieldset>
+                <style.CardInput
+                  name="password"
+                  placeholder="Password"
+                  type="password"
+                  onChange={this.handleChange.bind(this)}
+                  required
+                />
+              </style.CardFieldset>
+
+              <style.CardFieldset>
+                <style.CardInput
+                  name="password2"
+                  placeholder="Password Again"
+                  type="password"
+                  onChange={this.handleChange.bind(this)}
+                  required
+                />
+              </style.CardFieldset>
+              <style.CardFieldset>
+                <style.CardInput
+                  name="country"
+                  placeholder="Country"
+                  type="text"
+                  onChange={this.handleChange.bind(this)}
+                  required
+                />
+              </style.CardFieldset>
+              <style.CardFieldset>
+                <style.CardInput
+                  name="skills"
+                  placeholder="Skills"
+                  type="text"
+                  onChange={this.handleChange.bind(this)}
+                  required
+                />
+              </style.CardFieldset>
+              <style.CardFieldset />
+              <style.CardFieldset>
+                <style.CardButton type="submit">Sign Up</style.CardButton>
+              </style.CardFieldset>
+            </form>
+          </style.CardBody>
+        </style.CardWrapper>
       );
     }
   }

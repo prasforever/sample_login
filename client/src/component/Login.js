@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
-import styled from "styled-components";
-
-const LoginContent = styled.section`
-  padding: 20px;
-
-  @media (min-width: 961px) {
-    padding: 80px 40px;
-  }
-`;
+import * as style from "./styles";
 
 class Login extends Component {
   constructor() {
@@ -65,31 +57,39 @@ class Login extends Component {
       return <Redirect to={{ pathname: this.state.redirectTo }} />;
     } else {
       return (
-        <LoginContent>
-          <form onSubmit={this.handleSubmit.bind(this)}>
-            <label>
-              Username:
-              <input
-                name="username"
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-              />
-            </label>
-            <br />
-            <label>
-              Password:
-              <input
-                name="password"
-                type="password"
-                value={this.state.value}
-                onChange={this.handleChange.bind(this)}
-              />
-            </label>
-            <br />
-            <input type="submit" value="Submit" />
-          </form>
-        </LoginContent>
+        <style.CardWrapper>
+          <style.CardHeader>
+            <style.CardHeading>Login</style.CardHeading>
+          </style.CardHeader>
+
+          <style.CardBody>
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              <style.CardFieldset>
+                <style.CardInput
+                  name="username"
+                  placeholder="Username"
+                  type="text"
+                  onChange={this.handleChange.bind(this)}
+                  required
+                />
+              </style.CardFieldset>
+
+              <style.CardFieldset>
+                <style.CardInput
+                  name="password"
+                  placeholder="Password"
+                  type="password"
+                  onChange={this.handleChange.bind(this)}
+                  required
+                />
+              </style.CardFieldset>
+              <style.CardFieldset />
+              <style.CardFieldset>
+                <style.CardButton type="submit">Sign In</style.CardButton>
+              </style.CardFieldset>
+            </form>
+          </style.CardBody>
+        </style.CardWrapper>
       );
     }
   }

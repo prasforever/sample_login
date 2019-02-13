@@ -13,9 +13,14 @@ import Register from "./component/Register";
 const Wrapper = styled.section`
   width: 100%;
   margin: 0 auto;
+`;
+
+const MainContentBox = styled.header`
+  width: 100%;
+  margin: 0 auto;
 
   @media (min-width: 961px) {
-    width: 75%;
+    width: 60%;
   }
 `;
 
@@ -97,33 +102,37 @@ class App extends Component {
               />
 
               <Switch>
-                <Route exact path="/" component={Landing} />
-                <PropsRoute
-                  path="/login"
-                  component={Login}
-                  loggedIn={this.state.loggedIn}
-                  updateUser={this.updateUser}
-                />
-                <PropsRoute
-                  path="/register"
-                  component={Register}
-                  loggedIn={this.state.loggedIn}
-                  updateUser={this.updateUser}
-                />
+                <MainContentBox>
+                  <Route exact path="/" component={Landing} />
+                  <PropsRoute
+                    exact
+                    path="/login"
+                    component={Login}
+                    loggedIn={this.state.loggedIn}
+                    updateUser={this.updateUser}
+                  />
+                  <PropsRoute
+                    exact
+                    path="/register"
+                    component={Register}
+                    loggedIn={this.state.loggedIn}
+                    updateUser={this.updateUser}
+                  />
 
-                <PropsRoute
-                  path="/profile"
-                  component={Profile}
-                  loggedIn={this.state.loggedIn}
-                  username={this.state.username}
-                  email={this.state.email}
-                  firstName={this.state.firstName}
-                  lastName={this.state.lastName}
-                  dateOfBirth={this.state.dateOfBirth}
-                  Country={this.state.Country}
-                  Skills={this.state.Skills}
-                />
-                <Route component={NotFound} />
+                  <PropsRoute
+                    exact
+                    path="/profile"
+                    component={Profile}
+                    loggedIn={this.state.loggedIn}
+                    username={this.state.username}
+                    email={this.state.email}
+                    firstName={this.state.firstName}
+                    lastName={this.state.lastName}
+                    dateOfBirth={this.state.dateOfBirth}
+                    Country={this.state.Country}
+                    Skills={this.state.Skills}
+                  />
+                </MainContentBox>
               </Switch>
             </div>
           </BrowserRouter>
