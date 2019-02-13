@@ -35,6 +35,7 @@ app.disable("etag");
 
 require("./routes/authRoutes")(app);
 require("./routes/countryRoutes")(app);
+require("./routes/skillsRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   // Serve static files
