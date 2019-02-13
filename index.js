@@ -34,6 +34,7 @@ app.use(passport.session());
 app.disable("etag");
 
 require("./routes/authRoutes")(app);
+require("./routes/countryRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   // Serve static files

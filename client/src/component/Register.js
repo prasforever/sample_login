@@ -3,6 +3,38 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 import * as style from "./styles";
 
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    borderBottom: "#e5195f"
+  }),
+  valueContainer: base => ({
+    ...base,
+    padding: "0 !important"
+  }),
+
+  container: base => ({
+    ...base,
+    margin: "0 !important",
+    padding: "0 !important"
+  }),
+  control: (provided, state) => ({
+    ...provided,
+    border: "0 !important",
+    // This line disable the blue border
+    boxShadow: "0 !important",
+    "&:hover": {
+      border: "0 !important"
+    }
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+
+    return { ...provided, opacity, transition };
+  }
+};
+
 class Register extends Component {
   constructor() {
     super();
@@ -16,8 +48,25 @@ class Register extends Component {
       password2: "",
       Country: "",
       Skills: "",
-      redirectTo: null
+      redirectTo: null,
+      countries: []
     };
+  }
+
+  componentDidMount() {
+    axios
+      .get("/api/getCountries", {})
+      .then(res => {
+        if (res.status === 200) {
+          this.setState({
+            countries: res.data
+          });
+        }
+      })
+      .catch(error => {
+        console.log("login error: ");
+        console.log(error);
+      });
   }
 
   handleChange(event) {
@@ -25,6 +74,12 @@ class Register extends Component {
       [event.target.name]: event.target.value
     });
   }
+
+  handleDDChange = selected => {
+    this.setState({
+      Country: selected.label
+    });
+  };
 
   handleSubmit(event) {
     event.preventDefault();
@@ -38,7 +93,7 @@ class Register extends Component {
         dateOfBirth: this.state.dateOfBirth,
         password: this.state.password,
         password2: this.state.password2,
-        Country: this.state.country,
+        Country: this.state.Country,
         Skills: this.state.skills
       })
       .then(res => {
@@ -143,11 +198,12 @@ class Register extends Component {
                 />
               </style.CardFieldset>
               <style.CardFieldset>
-                <style.CardInput
-                  name="country"
+                <style.CardSelectInput
+                  options={this.state.countries}
                   placeholder="Country"
                   type="text"
-                  onChange={this.handleChange.bind(this)}
+                  styles={customStyles}
+                  onChange={this.handleDDChange.bind(this)}
                   required
                 />
               </style.CardFieldset>
