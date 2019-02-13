@@ -22,19 +22,21 @@ module.exports = app => {
 
       User.createUser(newUser, function(err, user) {
         if (err) throw err;
-        res
-          .send(
-            _.pick(user, [
-              "username",
-              "email",
-              "firstName",
-              "lastName",
-              "dateOfBirth",
-              "Country",
-              "Skills"
-            ])
-          )
-          .end();
+        passport.authenticate("local")(req, res, function() {
+          res
+            .send(
+              _.pick(user, [
+                "username",
+                "email",
+                "firstName",
+                "lastName",
+                "dateOfBirth",
+                "Country",
+                "Skills"
+              ])
+            )
+            .end();
+        });
       });
     } else {
       res

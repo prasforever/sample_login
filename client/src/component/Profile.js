@@ -77,13 +77,7 @@ class Profile extends Component {
         </style.CardBody>
       );
     } else {
-      return (
-        <style.CardBody>
-          <style.CardTable>
-            <style.CardRow>Please login to view details</style.CardRow>
-          </style.CardTable>
-        </style.CardBody>
-      );
+      return <style.CardBody>Please login to view details</style.CardBody>;
     }
   }
 
