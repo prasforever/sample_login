@@ -2,12 +2,16 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "./component/Header";
 import Landing from "./component/Landing";
 import Login from "./component/Login";
 import Profile from "./component/Profile";
 import Register from "./component/Register";
+
+library.add(faExclamationCircle);
 
 const Wrapper = styled.section`
   margin: 0 auto;
