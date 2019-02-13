@@ -1,100 +1,100 @@
 import React, { Component } from "react";
-import styled from "styled-components";
-
-const ProfileContent = styled.section`
-  padding: 20px;
-
-  @media (min-width: 961px) {
-    padding: 80px 40px;
-  }
-`;
+import * as style from "./styles";
 
 class Profile extends Component {
   getTableData() {
     if (this.props.loggedIn) {
       return (
-        <tbody>
-          {this.props.username ? (
-            <tr>
-              <td>Username:</td>
-              <td>{this.props.username}</td>
-            </tr>
-          ) : (
-            ""
-          )}
-          {this.props.email ? (
-            <tr>
-              <td>Email:</td>
-              <td>{this.props.email}</td>
-            </tr>
-          ) : (
-            ""
-          )}
-          {this.props.firstName ? (
-            <tr>
-              <td>First name:</td>
-              <td>{this.props.firstName}</td>
-            </tr>
-          ) : (
-            ""
-          )}
-          {this.props.lastName ? (
-            <tr>
-              <td>Last name:</td>
-              <td>{this.props.lastName}</td>
-            </tr>
-          ) : (
-            ""
-          )}
-          {this.props.dateOfBirth ? (
-            <tr>
-              <td>Date of Birth:</td>
-              <td>{this.props.dateOfBirth}</td>
-            </tr>
-          ) : (
-            ""
-          )}
-          {this.props.Country ? (
-            <tr>
-              <td>Country:</td>
-              <td>{this.props.Country}</td>
-            </tr>
-          ) : (
-            ""
-          )}
-          {this.props.Skills ? (
-            <tr>
-              <td>Skills:</td>
-              <td>{this.props.Skills}</td>
-            </tr>
-          ) : (
-            ""
-          )}
-        </tbody>
+        <style.CardBody>
+          <style.CardTable>
+            {this.props.username ? (
+              <style.CardRow>
+                <style.CardFieldLeft>Username:</style.CardFieldLeft>
+                <style.CardFieldRight>
+                  {this.props.username}
+                </style.CardFieldRight>
+              </style.CardRow>
+            ) : (
+              ""
+            )}
+            {this.props.email ? (
+              <style.CardRow>
+                <style.CardFieldLeft>Email:</style.CardFieldLeft>
+                <style.CardFieldRight>{this.props.email}</style.CardFieldRight>
+              </style.CardRow>
+            ) : (
+              ""
+            )}
+            {this.props.firstName ? (
+              <style.CardRow>
+                <style.CardFieldLeft>First name:</style.CardFieldLeft>
+                <style.CardFieldRight>
+                  {this.props.firstName}
+                </style.CardFieldRight>
+              </style.CardRow>
+            ) : (
+              ""
+            )}
+            {this.props.lastName ? (
+              <style.CardRow>
+                <style.CardFieldLeft>Last name:</style.CardFieldLeft>
+                <style.CardFieldRight>
+                  {this.props.lastName}
+                </style.CardFieldRight>
+              </style.CardRow>
+            ) : (
+              ""
+            )}
+            {this.props.dateOfBirth ? (
+              <style.CardRow>
+                <style.CardFieldLeft>Date of Birth:</style.CardFieldLeft>
+                <style.CardFieldRight>
+                  {this.props.dateOfBirth}
+                </style.CardFieldRight>
+              </style.CardRow>
+            ) : (
+              ""
+            )}
+            {this.props.Country ? (
+              <style.CardRow>
+                <style.CardFieldLeft>Country:</style.CardFieldLeft>
+                <style.CardFieldRight>
+                  {this.props.Country}
+                </style.CardFieldRight>
+              </style.CardRow>
+            ) : (
+              ""
+            )}
+            {this.props.Skills ? (
+              <style.CardRow>
+                <style.CardFieldLeft>Skills:</style.CardFieldLeft>
+                <style.CardFieldRight>{this.props.Skills}</style.CardFieldRight>
+              </style.CardRow>
+            ) : (
+              ""
+            )}
+          </style.CardTable>
+        </style.CardBody>
       );
     } else {
       return (
-        <tbody>
-          <tr>
-            <td>Please Login </td>
-          </tr>
-        </tbody>
+        <style.CardBody>
+          <style.CardTable>
+            <style.CardRow>Please login to view details</style.CardRow>
+          </style.CardTable>
+        </style.CardBody>
       );
     }
   }
 
   render() {
     return (
-      <ProfileContent>
-        <table>
-          <thead>
-            <tr>
-              <th>User Profile</th>
-            </tr>
-          </thead>
-          {this.getTableData()}
-        </table>
-      </ProfileContent>
+      <style.CardWrapper>
+        <style.CardHeader>
+          <style.CardHeading>User Profile</style.CardHeading>
+        </style.CardHeader>
+        {this.getTableData()}
+      </style.CardWrapper>
     );
   }
 }
