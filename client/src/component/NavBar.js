@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
@@ -21,14 +22,53 @@ const MenuBar = styled.nav`
 `;
 
 class NavBar extends Component {
+  handleLogout(event) {
+    event.preventDefault();
+    axios
+      .get("/api/logout")
+      .then(res => {
+        if (res.status === 200) {
+          // update App.js state
+          this.props.updateUser({
+            loggedIn: false,
+            username: null,
+            email: null,
+            firstName: null,
+            lastName: null,
+            dateOfBirth: null,
+            Country: null,
+            Skills: null
+          });
+        }
+      })
+      .catch(error => {
+        console.log("logout error: ");
+        console.log(error);
+      });
+  }
+
   render() {
-    return (
-      <MenuBar>
-        <MenuItem to="/login">Login</MenuItem>
-        <MenuItem to="/profile">Profile</MenuItem>
-        <MenuItem to="/logout">Logout</MenuItem>
-      </MenuBar>
-    );
+    switch (this.props.loggedIn) {
+      case null:
+        return;
+      case false:
+        return (
+          <MenuBar>
+            <MenuItem to="/register">Register</MenuItem>
+            <MenuItem to="/login">Login</MenuItem>
+          </MenuBar>
+        );
+      default:
+        return (
+          <MenuBar>
+            <MenuItem to="/profile">Profile</MenuItem>
+            <MenuItem to="#" onClick={this.handleLogout.bind(this)}>
+              Logout
+            </MenuItem>
+          </MenuBar>
+        );
+    }
   }
 }
+
 export default NavBar;

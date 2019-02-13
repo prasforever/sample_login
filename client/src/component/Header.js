@@ -28,7 +28,10 @@ class Header extends Component {
     return (
       <HeaderContent>
         <LogoContent to="/">MyApp</LogoContent>
-        <NavBar />
+        <NavBar
+          updateUser={this.props.updateUser}
+          loggedIn={this.props.loggedIn}
+        />
       </HeaderContent>
     );
   }

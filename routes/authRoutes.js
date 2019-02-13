@@ -1,4 +1,5 @@
 const passport = require("passport");
+const _ = require("lodash");
 var User = require("../models/User");
 
 module.exports = app => {
@@ -21,7 +22,19 @@ module.exports = app => {
 
       User.createUser(newUser, function(err, user) {
         if (err) throw err;
-        res.send(user).end();
+        res
+          .send(
+            _.pick(user, [
+              "username",
+              "email",
+              "firstName",
+              "lastName",
+              "dateOfBirth",
+              "Country",
+              "Skills"
+            ])
+          )
+          .end();
       });
     } else {
       res
@@ -33,17 +46,37 @@ module.exports = app => {
 
   // Login User
   app.post("/api/login", passport.authenticate("local"), function(req, res) {
-    res.send(req.user);
+    res.send(
+      _.pick(req.user, [
+        "username",
+        "email",
+        "firstName",
+        "lastName",
+        "dateOfBirth",
+        "Country",
+        "Skills"
+      ])
+    );
   });
 
   // Get current user
   app.get("/api/user", function(req, res) {
-    res.send(req.user);
+    res.send(
+      _.pick(req.user, [
+        "username",
+        "email",
+        "firstName",
+        "lastName",
+        "dateOfBirth",
+        "Country",
+        "Skills"
+      ])
+    );
   });
 
   // Logout
   app.get("/api/logout", function(req, res) {
     req.logout();
-    res.send(null);
+    res.redirect("/");
   });
 };
