@@ -1,17 +1,16 @@
 import React, { Component } from "react";
-import styled from "styled-components";
-
-const LandingContent = styled.section`
-  padding: 20px;
-
-  @media (min-width: 961px) {
-    padding: 80px 40px;
-  }
-`;
+import * as style from "./styles";
 
 class Landing extends Component {
   render() {
-    return <LandingContent>Landing Page</LandingContent>;
+    return (
+      <style.CardWrapper>
+        <style.CardHeader>
+          <style.CardHeading>Home Page</style.CardHeading>
+        </style.CardHeader>
+        <style.CardBody>Please choose a menu option</style.CardBody>
+      </style.CardWrapper>
+    );
   }
 }
 
