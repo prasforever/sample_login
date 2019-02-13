@@ -6,12 +6,10 @@ import styled from "styled-components";
 import Header from "./component/Header";
 import Landing from "./component/Landing";
 import Login from "./component/Login";
-import NotFound from "./component/NotFound";
 import Profile from "./component/Profile";
 import Register from "./component/Register";
 
 const Wrapper = styled.section`
-  width: 100%;
   margin: 0 auto;
 `;
 
