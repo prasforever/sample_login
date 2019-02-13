@@ -68,10 +68,16 @@ class App extends Component {
 
   getUser() {
     axios.get("/api/user/").then(response => {
-      if (response.data.user) {
+      if (response.data.username) {
         this.setState({
           loggedIn: true,
-          username: response.data.user.username
+          username: response.data.username,
+          email: response.data.email,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          dateOfBirth: response.data.dateOfBirth,
+          Country: response.data.Country,
+          Skills: response.data.Skills
         });
       } else {
         this.setState({

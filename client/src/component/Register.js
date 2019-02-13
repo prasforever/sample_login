@@ -3,6 +3,38 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 import * as style from "./styles";
 
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    borderBottom: "#e5195f"
+  }),
+  valueContainer: base => ({
+    ...base,
+    padding: "0 !important"
+  }),
+
+  container: base => ({
+    ...base,
+    margin: "0 !important",
+    padding: "0 !important"
+  }),
+  control: (provided, state) => ({
+    ...provided,
+    border: "0 !important",
+    // This line disable the blue border
+    boxShadow: "0 !important",
+    "&:hover": {
+      border: "0 !important"
+    }
+  }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+
+    return { ...provided, opacity, transition };
+  }
+};
+
 class Register extends Component {
   constructor() {
     super();
@@ -16,8 +48,43 @@ class Register extends Component {
       password2: "",
       Country: "",
       Skills: "",
-      redirectTo: null
+      redirectTo: null,
+      countriesDropdown: [],
+      skillsDropdown: [],
+      skillsInput: ""
     };
+  }
+
+  componentDidMount() {
+    axios
+      .get("/api/getCountries", {})
+      .then(res => {
+        if (res.status === 200) {
+          this.setState({
+            countriesDropdown: res.data
+          });
+        }
+      })
+      .catch(error => {
+        console.log("login error: ");
+        console.log(error);
+      });
+
+    axios
+      .post("/api/getSkills", {
+        value: this.state.skillsInput
+      })
+      .then(res => {
+        if (res.status === 200) {
+          this.setState({
+            skillsDropdown: res.data
+          });
+        }
+      })
+      .catch(error => {
+        console.log("Fetching skills Errored out: ");
+        console.log(error);
+      });
   }
 
   handleChange(event) {
@@ -25,6 +92,40 @@ class Register extends Component {
       [event.target.name]: event.target.value
     });
   }
+
+  handleSkillsChange = selected => {
+    var selectedSkills = [];
+    selected.forEach(element => {
+      selectedSkills.push(element.label);
+    });
+    this.setState({
+      Skills: selectedSkills.toString()
+    });
+  };
+
+  handleCountryChange = selected => {
+    this.setState({
+      Country: selected.label
+    });
+  };
+
+  handleDDInputChange = input => {
+    axios
+      .post("/api/getSkills", {
+        value: input
+      })
+      .then(res => {
+        if (res.status === 200) {
+          this.setState({
+            skillsDropdown: res.data
+          });
+        }
+      })
+      .catch(error => {
+        console.log("Fetching skills Errored out: ");
+        console.log(error);
+      });
+  };
 
   handleSubmit(event) {
     event.preventDefault();
@@ -38,8 +139,8 @@ class Register extends Component {
         dateOfBirth: this.state.dateOfBirth,
         password: this.state.password,
         password2: this.state.password2,
-        Country: this.state.country,
-        Skills: this.state.skills
+        Country: this.state.Country,
+        Skills: this.state.Skills
       })
       .then(res => {
         if (res.status === 200) {
@@ -51,8 +152,8 @@ class Register extends Component {
             firstName: res.data.firstName,
             lastName: res.data.lastName,
             dateOfBirth: res.data.dateOfBirth,
-            Country: res.data.country,
-            Skills: res.data.skills
+            Country: res.data.Country,
+            Skills: res.data.Skills
           });
           // update the state to redirect to home
           this.setState({
@@ -143,21 +244,23 @@ class Register extends Component {
                 />
               </style.CardFieldset>
               <style.CardFieldset>
-                <style.CardInput
-                  name="country"
+                <style.CardSelectInput
+                  options={this.state.countriesDropdown}
                   placeholder="Country"
-                  type="text"
-                  onChange={this.handleChange.bind(this)}
+                  styles={customStyles}
+                  onChange={this.handleCountryChange.bind(this)}
                   required
                 />
               </style.CardFieldset>
               <style.CardFieldset>
-                <style.CardInput
-                  name="skills"
+                <style.CardSelectInput
+                  options={this.state.skillsDropdown}
                   placeholder="Skills"
-                  type="text"
-                  onChange={this.handleChange.bind(this)}
+                  styles={customStyles}
+                  onChange={this.handleSkillsChange.bind(this)}
+                  onInputChange={this.handleDDInputChange.bind(this)}
                   required
+                  isMulti
                 />
               </style.CardFieldset>
               <style.CardFieldset />
