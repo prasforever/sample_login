@@ -31,6 +31,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.disable("etag");
+
 require("./routes/authRoutes")(app);
 require("./routes/userRoutes")(app);
 
